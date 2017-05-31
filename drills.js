@@ -78,7 +78,13 @@ process.stdout.write('\\033c');
 //11
 // knex('restaurants').update({name:'DJ Reynolds Pub and Restaurant'}).where({nyc_restaurant_id:30191841})
 // .then(results => console.log(JSON.stringify(results,null,2)));
-knex('restaurants').select().where({nyc_restaurant_id:30191841})
-.then(results => console.log(JSON.stringify(results,null,2)));
+// knex('restaurants').select().where({nyc_restaurant_id:30191841})
+// .then(results => console.log(JSON.stringify(results,null,2)));
+
+//12
+// knex('grades').del().where('id',10)
+// .then(results => console.log(JSON.stringify(results,null,2)));
+// knex('grades').select().where('id',10)
+// .then(results => console.log(JSON.stringify(results,null,2)));
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); }); 
