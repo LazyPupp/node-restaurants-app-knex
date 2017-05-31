@@ -88,6 +88,8 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
 //13
-
+knex('restaurants').del().where('id',22)
+ .then(results => console.log(JSON.stringify(results,null,2)));
+ //FOREIGN KEY CONSTRAINT
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); }); 
