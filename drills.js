@@ -35,6 +35,7 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
 //7
-
+knex('restaurants').select().where({cuisine:'Italian',address_zipcode:10012 || 10013 || 10014}).limit(5)
+.then(results => console.log(JSON.stringify(results,null,2)));
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); });
