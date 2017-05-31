@@ -88,8 +88,56 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
 //13
-knex('restaurants').del().where('id',22)
- .then(results => console.log(JSON.stringify(results,null,2)));
+// knex('restaurants').del().where('id',22)
+//  .then(results => console.log(JSON.stringify(results,null,2)));
  //FOREIGN KEY CONSTRAINT
+knex.select('restaurants.id', 'name', 'cuisine', 'borough', 'grades.id as gradeId', 'grade', 'score')
+    .from('restaurants')
+    .innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')
+    .orderBy('date', 'asc')
+    .limit(10)
+    .where('restaurants.id', 2)
+    .then(results => {const hydrated = {};
+        results.forEach(row => {
+            if( !(row.id in hydrated) ) {
+                hydrated[row.id] = {
+                    id: row.id,
+                    name:row.name,
+                    cuisine:row.cuisine,
+                    borough:row.borough,
+                    grades:[]
+                };
+            }
+            hydrated[row.id].grades.push({
+                name:row.grade,
+                score:row.score,
+            });
+
+        });
+    
+console.log(hydrated[2]);
+    });
+    
+
+// const hydrated = {};
+// const restaurants;
+// restaurants.forEach(row => {
+//     if( !(row.id in hydrated) ) {
+//         hydrated[row.id] = {
+//          id: row.id,
+//          name:row.name,
+//          cuisine:row.cuisine,
+//          borough:row.borough,
+//          grades:[]
+//      };
+//     }
+//     hydrated[row.id].grades.push({
+//         name:row.grade,
+//         score:row.score,
+//     });
+// });
+    
+
+
 // // Destroy the connection pool
- knex.destroy().then(() => { console.log('closed'); }); 
+knex.destroy().then(() => { console.log('closed'); }); 
