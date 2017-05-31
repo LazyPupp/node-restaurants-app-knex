@@ -35,7 +35,26 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
 //7
-knex('restaurants').select().where({cuisine:'Italian',address_zipcode:10012 || 10013 || 10014}).limit(5)
-.then(results => console.log(JSON.stringify(results,null,2)));
+// knex('restaurants').select().where({cuisine:'Italian',address_zipcode:10012 || 10013 || 10014}).limit(5)
+// .then(results => console.log(JSON.stringify(results,null,2)));
+
+//8
+// knex('restaurants').insert({
+//   name: 'Byte Cafe',
+//   borough: 'Brooklyn',
+//   cuisine: 'coffee',
+//   address_building_number: '123',
+//   address_street: 'Atlantic Avenue',
+//   address_zipcode: '11231'})
+// .then(results => console.log(JSON.stringify(results,null,2)));
+
+knex.select().from('restaurants').where({ name: 'Byte Cafe',
+  borough: 'Brooklyn',
+  cuisine: 'coffee',
+  address_building_number: '123',
+  address_street: 'Atlantic Avenue',
+  address_zipcode: '11231'})
+  .then(results => console.log(JSON.stringify(results,null,2)));
+
 // // Destroy the connection pool
- knex.destroy().then(() => { console.log('closed'); });
+ knex.destroy().then(() => { console.log('closed'); }); 
