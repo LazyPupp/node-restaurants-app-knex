@@ -95,8 +95,8 @@ knex.select('restaurants.id', 'name', 'cuisine', 'borough', 'grades.id as gradeI
     .from('restaurants')
     .innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')
     .orderBy('date', 'asc')
-    .limit(200)
-    //.where('restaurants.id', 2)
+    .limit(10)
+    .where('restaurants.id', 2)
     .then(results => {const hydrated = {};
         results.forEach(row => {
             if( !(row.id in hydrated) ) {
@@ -116,8 +116,8 @@ knex.select('restaurants.id', 'name', 'cuisine', 'borough', 'grades.id as gradeI
 
         });
     
-//console.log(hydrated[2]);
-console.log(hydrated);
+console.log(hydrated[2]);
+//console.log(hydrated);
     });
     
 
