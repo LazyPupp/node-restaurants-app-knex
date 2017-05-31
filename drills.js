@@ -5,10 +5,13 @@ const knex = require('knex')(DATABASE);
 // clear the console before each run
 process.stdout.write('\\033c');
 
-// // Sample select 
-// knex.select().from('restaurants')
-//   .debug(true)
-//   .then(results => console.log(results));
+// Sample select 
+knex.select().from('restaurants')
+  .debug(true)
+  .then(results => console.log(results));
+
+knex.select().from('restaurants')
+.then(results => console.log(JSON.stringify(results,null,2)));
 
 
 // // Destroy the connection pool
