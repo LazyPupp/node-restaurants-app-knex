@@ -18,17 +18,18 @@ app.get('/restaurants', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
     // Add query and response here...)
-    knex.first('restaurants.id as restaurant', 'name', 'cuisine', 'borough', 'grades.id', 'grade', 'date as inspectionDate', 'score')
-    .select(knex.raw('CONCAT(address_building_number, \' \', address_street, \' \', address_zipcode ) as address'))
+   //knex.first('restaurants.id as restaurant', 'name', 'cuisine', 'borough', 'grades.id', 'grade', 'date as inspectionDate', 'score')
+     knex.first('restaurants.id as restaurant', 'name', 'cuisine', 'borough')
+    //.select(knex.raw('CONCAT(address_building_number, \' \', address_street, \' \', address_zipcode ) as address'))
     .from('restaurants')
     .where('restaurants.id', req.params.id)
-    .innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')    
-    .orderBy('date', 'desc')
+    //.innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')    
+   //.orderBy('date', 'desc')
     .limit(1)
     .then(results => res.json(results));
 });
     
-app.post('/restaurants'), (req, res) => {
+app.post('/restaurants', (req, res) => {
     const requiredFields = ['name'];
     for (let i=0; i<requiredFields.length; i++) {
         const field = requiredFields[i];
@@ -37,9 +38,12 @@ app.post('/restaurants'), (req, res) => {
             console.error(message);
             return res.status(400).send(message);
         }
-        knex('restaurants').insert({'name':req.body.name})
-    .then(results => res.status(201).json(results));
     }
-
-};  
+  knex('restaurants').insert({'name':req.body.name})
+  .returning('id')
+  .then(results => {
+ res.redirect(`/restaurants/${results}`);
+  //res.status(201).json(results)
+  });
+});  
 app.listen(PORT);
