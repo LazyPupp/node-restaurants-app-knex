@@ -27,9 +27,14 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
 //5
+// knex('restaurants').select().count()
+// .then(results => console.log(JSON.stringify(results,null,2)));
 
-knex('restaurants').select().count()
-.then(results => console.log(JSON.stringify(results,null,2)));
+//6
+// knex('restaurants').select().count().where({cuisine:'Thai',address_zipcode:11372})
+// .then(results => console.log(JSON.stringify(results,null,2)));
+
+//7
 
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); });
