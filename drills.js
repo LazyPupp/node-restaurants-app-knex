@@ -86,5 +86,8 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 // knex('grades').select().where('id',10)
 // .then(results => console.log(JSON.stringify(results,null,2)));
+
+//13
+
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); }); 
