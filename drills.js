@@ -23,7 +23,12 @@ process.stdout.write('\\033c');
 //  .then(results => console.log(JSON.stringify(results,null,2)));
 
 //4
-knex('restaurants').select().count().where('cuisine','Thai')
+// knex('restaurants').select().count().where('cuisine','Thai')
+// .then(results => console.log(JSON.stringify(results,null,2)));
+
+//5
+
+knex('restaurants').select().count()
 .then(results => console.log(JSON.stringify(results,null,2)));
 
 // // Destroy the connection pool
