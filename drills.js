@@ -18,5 +18,9 @@ process.stdout.write('\\033c');
 // knex('restaurants').select().where('cuisine','Italian')
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
+//3
+knex.select('id','name','cuisine').from('restaurants').where('cuisine','Italian').limit(10)
+ .then(results => console.log(JSON.stringify(results,null,2)));
+
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); });
