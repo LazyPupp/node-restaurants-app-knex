@@ -19,8 +19,12 @@ process.stdout.write('\\033c');
 // .then(results => console.log(JSON.stringify(results,null,2)));
 
 //3
-knex.select('id','name','cuisine').from('restaurants').where('cuisine','Italian').limit(10)
- .then(results => console.log(JSON.stringify(results,null,2)));
+// knex.select('id','name','cuisine').from('restaurants').where('cuisine','Italian').limit(10)
+//  .then(results => console.log(JSON.stringify(results,null,2)));
+
+//4
+knex('restaurants').select().count().where('cuisine','Thai')
+.then(results => console.log(JSON.stringify(results,null,2)));
 
 // // Destroy the connection pool
  knex.destroy().then(() => { console.log('closed'); });
