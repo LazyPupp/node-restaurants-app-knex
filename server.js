@@ -18,7 +18,8 @@ app.get('/restaurants', (req, res) => {
 
 app.get('/restaurants/:id', (req, res) => {
     // Add query and response here...)
- knex.select('restaurants.id as restaurant', 'name', 'cuisine', 'borough', 'grades.id', 'grade', 'date as inspectionDate', 'score')
+ knex.first('restaurants.id as restaurant', 'name', 'cuisine', 'borough', 'grades.id', 'grade', 'date as inspectionDate', 'score')
+    .select(knex.raw("CONCAT(address_building_number, ' ', address_street, ' ', address_zipcode ) as address"))
     .from('restaurants')
     .where('restaurants.id', req.params.id)
     .innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')    
