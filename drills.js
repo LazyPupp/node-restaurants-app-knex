@@ -1,6 +1,8 @@
 'use strict';
 const { DATABASE, PORT } = require('./config');
 const knex = require('knex')(DATABASE);
+const Treeize = require('treeize');
+
 
 // clear the console before each run
 process.stdout.write('\\033c');
@@ -91,54 +93,61 @@ process.stdout.write('\\033c');
 // knex('restaurants').del().where('id',22)
 //  .then(results => console.log(JSON.stringify(results,null,2)));
  //FOREIGN KEY CONSTRAINT
-knex.select('restaurants.id', 'name', 'cuisine', 'borough', 'grades.id as gradeId', 'grade', 'score')
+
+ //Try IT Hydration
+// knex.select('restaurants.id', 'name', 'cuisine', 'borough', 'grades.id as gradeId', 'grade', 'score')
+//     .from('restaurants')
+//     .innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')
+//     .orderBy('date', 'asc')
+//     .limit(10)
+//     .where('restaurants.id', 2)
+//     .then(results => {const hydrated = {};
+//         results.forEach(row => {
+//             if( !(row.id in hydrated) ) {
+//                 hydrated[row.id] = {
+//                     id: row.id,
+//                     name:row.name,
+//                     cuisine:row.cuisine,
+//                     borough:row.borough,
+//                     grades:[]
+//                 };
+//             }
+//             //all the grades for that particular restaurant
+//             hydrated[row.id].grades.push({
+//                 name:row.grade,
+//                 score:row.score,
+//             });
+
+//         });
+    
+// console.log(hydrated[2]);
+// //console.log(hydrated);
+//     });
+    
+////////////////////////////////// TREEIZE////////////////////////////////////////////
+let restaurants = new Treeize();
+knex.select('restaurants.id', 'name', 'cuisine', 'borough', 'grade as grades:name', 'score as grades:name')
     .from('restaurants')
     .innerJoin('grades', 'restaurants.id', 'grades.restaurant_id')
     .orderBy('date', 'asc')
     .limit(10)
     .where('restaurants.id', 2)
-    .then(results => {const hydrated = {};
-        results.forEach(row => {
-            if( !(row.id in hydrated) ) {
-                hydrated[row.id] = {
-                    id: row.id,
-                    name:row.name,
-                    cuisine:row.cuisine,
-                    borough:row.borough,
-                    grades:[]
-                };
-            }
-            //all the grades for that particular restaurant
-            hydrated[row.id].grades.push({
-                name:row.grade,
-                score:row.score,
-            });
-
-        });
-    
-console.log(hydrated[2]);
-//console.log(hydrated);
+    .then(results=> {
+      // const a = results.map(row=>{
+        
+      //   return {
+      //     'id': row.id,
+      //     'name': row.name,
+      //     'cuisine':row.cuisine,
+      //     'borough': row.borough,
+      //     'grades:name':row.grade,
+      //     'grades:score':row.score
+      //   };
+      // });
+      //restaurants.grow(a);
+      restaurants.grow(results);
+      console.log(restaurants.getData());
     });
-    
-
-// const hydrated = {};
-// const restaurants;
-// restaurants.forEach(row => {
-//     if( !(row.id in hydrated) ) {
-//         hydrated[row.id] = {
-//          id: row.id,
-//          name:row.name,
-//          cuisine:row.cuisine,
-//          borough:row.borough,
-//          grades:[]
-//      };
-//     }
-//     hydrated[row.id].grades.push({
-//         name:row.grade,
-//         score:row.score,
-//     });
-// });
-    
 
 
 // // Destroy the connection pool
